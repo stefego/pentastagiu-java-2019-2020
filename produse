@@ -1,0 +1,184 @@
+import java.sql.SQLOutput;
+import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.io.IOException;
+
+
+public class storemenu
+
+{
+    int x = 0, y =0;
+    Double tax=.19;
+    double stotal;
+    double total;
+    double answer;
+
+    void menu()
+    {
+        try
+        {
+            Scanner kb = new Scanner(System.in);
+            System.out.println("\n Cosul dumneavostra contine:" + x + "carti si "
+                    + y + "dulciuri\n");
+
+
+
+            System.out.println("Va rugam sa alegeti din meniul (1-3)"
+                    + "\n\t1. Produse " + "\n\t2. Plata " + "\n\t3. Renuntare");
+            byte ch = kb.nextByte();
+            if (ch == 1)
+                pro();
+            else if (ch == 2)
+                check();
+            else if (ch == 3)
+                System.exit(0);
+            else if (ch <= 0 || ch > 3)
+            {
+                System.out.println("Alegere gresita.");
+                menu();
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Alegere gresita.");
+            menu();
+        }
+    }
+    void pro()
+    {
+        try {
+            Scanner kb = new Scanner(System.in);
+            System.out.println("Va rugam sa alegeti din meniul (1-3)"
+                    + "\n\t1. Carti $2.00" + "\n\t2. Dulciuri $1.00" + "\n\t3. Renuntare");
+            byte ans = kb.nextByte();
+            if (ans == 1) {
+                Scanner kb1 = new Scanner(System.in);
+                System.out.println("Doriti sa o cumparati?(y/n)");
+                String a1 = kb1.nextLine();
+                char a2 = a1.charAt(0);
+                if (a2 == 'y' || a2 == 'Y')
+                {
+                    Scanner kb2 = new Scanner(System.in);
+                    System.out.println("Cate doriti sa cumparati ?");
+                    x = kb2.nextInt();
+                    menu();
+                }
+                else if (a2 == 'n' || a2 == 'N')
+                {
+                    pro();
+                }
+                else
+                {
+                    System.out.println("Alegere gresita.");
+                    pro();
+                }
+
+            }
+            else if (ans == 2)
+            {
+                Scanner kb3 = new Scanner(System.in);
+                System.out.println("Va rugam sa confirmati daca doriti sa cumparati ?(y/n)");
+                String a3 = kb3.nextLine();
+                char a4 = a3.charAt(0);
+                if (a4 == 'y' || a4 == 'Y')
+                {
+                    Scanner kb4 = new Scanner(System.in);
+                    System.out.println(" Cate bucati doriti sa cumparati ?");
+                    y = kb4.nextInt();
+                    menu();
+                } else if (a4 == 'n' || a4 == 'N')
+                {
+                    pro();
+                }
+                else
+                {
+                    System.out.println("Alegere gresita.");
+                    pro();
+                }
+
+
+                check();
+            }
+            else if (ans == 3)
+                System.exit(0);
+            else if (ans <= 0 || ans > 3)
+            {
+                System.out.println("Alegere gresita.");
+                pro();
+            }
+
+        }
+
+
+
+        catch (Exception e)
+        {
+            System.out.println("Alegere gresita.");
+            menu();
+        }
+    }
+    void check()
+    {
+        Scanner kb=new Scanner(System.in);
+        DecimalFormat f= new DecimalFormat("$#,##0.00");
+
+        if( x > 0 && y == 0)
+        {
+            total= x * 2.00;
+            stotal=total*tax;
+            answer=stotal + total;
+            System.out.println(" Ati cumparat  " + x + " carti in valoare de  " + f.format(answer) + " cu TVA ");
+
+
+        }
+        else if( y > 0 && x == 0)
+        {
+            total= y * 1.00;
+            stotal=total*tax;
+            answer=stotal + total;
+            System.out.println(" Ati cumparat " + y + " dulciuri in valoare de  " + f.format(answer) + " cu TVA ");
+
+
+        }
+        else if( y > 0 && x > 0)
+        {
+            total = x * 2.00;
+            stotal=total * tax ;
+            answer=stotal + total;
+            double total1 = y * 1.00;
+            double stotal1= total1 * tax;
+            double answer1= stotal1 + total1;
+            double  answer2= answer + answer1;
+            System.out.println(" Ati cumparat " + x + " carti si " + y + " dulciuri in valoare de " + f.format(answer2) + " cu TVA ");
+
+
+        }
+        else
+        {
+            try
+            {
+                System.out.println("Nu ati ales nimic. Varugam sa alegeti una din cele 2 optiuni. (1-2)" +
+                        "\n\t1. Produse" + "\n\t2. Exit/Cancel");
+                byte var = kb.nextByte();
+                if (var == 1)
+                    pro();
+                else if (var == 2)
+                    System.exit(0);
+            }
+            catch(Exception e)
+            {
+                System.out.println(" Alegere gresita.");
+                check();
+            }
+        }
+    }
+    public static void main(String[] args)
+    {
+        storemenu f=new storemenu();
+        f.menu();
+
+
+
+    }
+}
